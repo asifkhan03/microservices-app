@@ -1,0 +1,14 @@
+{
+    "name": "order-service",
+    "version": "1.0.0",
+    "description": "A simple order service.",
+    "main": "app.js",
+    "scripts": {
+      "start": "node app.js",
+      "test": "echo \"No tests available\" && exit 0"
+    },
+    "dependencies": {
+      "express": "^4.18.2"
+    }
+  }
+  
