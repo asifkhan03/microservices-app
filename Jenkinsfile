@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-creds') // Add your Docker Hub credentials in Jenkins
-        DOCKER_IMAGE = "your-dockerhub-username/user-service:${env.BRANCH_NAME}"
+        DOCKER_IMAGE = "asifkhan03/user-service:${env.BRANCH_NAME}"
     }
 
     stages {
