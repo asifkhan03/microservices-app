@@ -2,14 +2,30 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-creds') // Add your Docker Hub credentials in Jenkins
-        DOCKER_IMAGE = "asifkhan03/user-service:${env.BRANCH_NAME}"
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-creds') // Docker Hub credentials ID in Jenkins
+        GITHUB_CREDENTIALS = credentials('github-creds') // GitHub credentials ID in Jenkins
+        DOCKER_IMAGE = "asifkhan03/user-service:${env.BRANCH_NAME}" // Docker image with branch name
     }
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir() // Clean the workspace to avoid corrupted files
+            }
+        }
+
         stage('Checkout') {
             steps {
-                checkout scm
+                script {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: "*/${env.BRANCH_NAME}"]],
+                        userRemoteConfigs: [[
+                            url: 'https://github.com/asifkhan03/microservices-app.git',
+                            credentialsId: 'github-creds' // Ensure this matches your GitHub credentials in Jenkins
+                        ]]
+                    ])
+                }
             }
         }
 
@@ -63,4 +79,3 @@ pipeline {
         }
     }
 }
-
